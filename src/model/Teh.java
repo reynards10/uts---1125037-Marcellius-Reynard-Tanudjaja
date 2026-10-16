@@ -3,29 +3,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Teh extends MenuItem implements Customizable {
-    private double harga;
+    double harga;
+    int boba;
+    int gula;
+    int es;
+    int karamel;
+    double add;
+    double total;
 
-    public Teh(String id,String nama,double harga, int stock) {
+    public Teh(String id,String nama,double harga, int stock,int boba,int gula, int es,int karamel) {
         super (id,nama,harga,stock);
         this.harga = harga;
     }
 
-    public double getHarga() {
-        return harga;
-    }
-
-    public void customize(List<Integer> customizations) {
+    public void customize(int boba, int karamel) {
     
+        if (boba <= 3) {
+            add = boba * 1000;
+        }
+
+        if (karamel <= 5 ) {
+            add = add + (karamel * 3000);
+        }
     }
-    //Rum (+3000) [0-1] Extra Shot (+5000) [0-3] Es (free) [0-5] Gula (free) [0-5] Boba (+1000) [0-3]Meses (+500) [0-5] Karamel (+3000) [0-5]
-    public void customize(int[] customizations) {
-        int add;
-        add = customizations[0] * 3000 + customizations[5] * 3000;
+    
+    public double hitungHargaTotal(int jumlah) {
+        double total;
+        total = jumlah * 10000;
+        return total;
     }
 
-    public double hitungHargaTotal() {
-        int total;
-        total = harga + add;
+    public double hitungHargaTotal(int jumlah, String kodePromo, double total) {
+        if (kodePromo equals("12345")) {
+        total = total-(total * 0.10);
+        }
+        return total;
+    }
+
+    public double hitungHargaTotal(double total) {
+        total = total + add;
+        return total;
     }
 
     public String getOrderDetail() {
