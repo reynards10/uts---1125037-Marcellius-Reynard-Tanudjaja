@@ -1,5 +1,4 @@
 package model;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Teh extends MenuItem implements Customizable {
@@ -26,7 +25,7 @@ public class Teh extends MenuItem implements Customizable {
             this.gula = customizations.get(1);
             this.es = customizations.get(2);
             this.karamel = customizations.get(3);
-            hitungBiayaTambahan();
+
         }
     }
 
@@ -37,7 +36,6 @@ public class Teh extends MenuItem implements Customizable {
             this.gula = customizations[1];
             this.es = customizations[2];
             this.karamel = customizations[3];
-            hitungBiayaTambahan();
         }
     }
 
@@ -76,10 +74,6 @@ public class Teh extends MenuItem implements Customizable {
     @Override
     public String getOrderDetail() {
         return "Teh: " + getNama() + " | Boba: " + boba + ", Es: " + es + ", Gula: " + gula + ", Karamel: " + karamel + " | Tambahan: " + add;
-    }
-
-    public String getOrderDetail() {
-        return "Add on : " +add;
     }
 }
 
