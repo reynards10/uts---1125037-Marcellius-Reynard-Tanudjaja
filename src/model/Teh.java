@@ -9,40 +9,73 @@ public class Teh extends MenuItem implements Customizable {
     int es;
     int karamel;
     double add;
-    double total;
 
     public Teh(String id,String nama,double harga, int stock,int boba,int gula, int es,int karamel) {
         super (id,nama,harga,stock);
         this.harga = harga;
+        this.gula = gula;
+        this.es = es;
+        this.karamel = karamel;
+        this.add = 0;
     }
 
-    public void customize(int boba, int karamel) {
-    
-        if (boba <= 3) {
-            add = boba * 1000;
-        }
-
-        if (karamel <= 5 ) {
-            add = add + (karamel * 3000);
+    @Override
+    public void customize(List<Integer> customizations) {
+        if (customizations != null && customizations.size() >= 4) {
+            this.boba = customizations.get(0);
+            this.gula = customizations.get(1);
+            this.es = customizations.get(2);
+            this.karamel = customizations.get(3);
+            hitungBiayaTambahan();
         }
     }
-    
+
+    @Override
+    public void customize(int[] customizations) {
+        if (customizations != null && customizations.length >= 4) {
+            this.boba = customizations[0];
+            this.gula = customizations[1];
+            this.es = customizations[2];
+            this.karamel = customizations[3];
+            hitungBiayaTambahan();
+        }
+    }
+
+    @Override
     public double hitungHargaTotal(int jumlah) {
-        double total;
-        total = jumlah * 10000;
-        return total;
+    this.add = (this.boba * 1000) + (this.karamel * 3000);
+    return (getHarga() + this.add) * jumlah;
     }
 
-    public double hitungHargaTotal(int jumlah, String kodePromo, double total) {
-        if (kodePromo equals("12345")) {
-        total = total-(total * 0.10);
+    @Override
+    public double hitungHargaTotal() {
+        this.add = (this.boba * 1000) + (this.karamel * 3000);
+        return getHarga() + this.add;
+    }
+
+    @Override
+    public double hitungHargaTotal(int jumlah, String kodePromo) {
+        double total = hitungHargaTotal(jumlah);
+        if (kodePromo != null && kodePromo.equalsIgnoreCase("TEA")) {
+            total *= 0.1; 
         }
         return total;
     }
 
-    public double hitungHargaTotal(double total) {
-        total = total + add;
+    @Override
+    public double hitungHargaTotal(int jumlah, EnumUkuran ukuran) {
+        double total = hitungHargaTotal(jumlah);
+        if (ukuran == EnumUkuran.MEDIUM) {
+            total += (1500 * jumlah);
+        } else if (ukuran == EnumUkuran.LARGE) {
+            total += (3000 * jumlah);
+        }
         return total;
+    }
+
+    @Override
+    public String getOrderDetail() {
+        return "Teh: " + getNama() + " | Boba: " + boba + ", Es: " + es + ", Gula: " + gula + ", Karamel: " + karamel + " | Tambahan: " + add;
     }
 
     public String getOrderDetail() {

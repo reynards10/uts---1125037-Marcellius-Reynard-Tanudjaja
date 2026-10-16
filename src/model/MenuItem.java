@@ -30,6 +30,9 @@ public abstract class MenuItem {
     }
 
     public abstract double hitungHargaTotal();
+    public abstract double hitungHargaTotal(int jumlah);
+    public abstract double hitungHargaTotal(int jumlah, String kodePromo);
+    public abstract double hitungHargaTotal(int jumlah, EnumUkuran ukuran);
     public abstract String getOrderDetail();
 
 }
